@@ -1,6 +1,7 @@
 # High-level Abstractions, Safety, or Performance?
 
-This project provides a source code for my talk at EPAM's Zed 2020 conference.
+This project provides a source code for my talk at [EPAM's Zed 2020](https://community-z.com/events/zed-conference)
+conference.
 
 During the talk I compare safety, user experience, and performance of a similar scenario in 3 different
 programming languages: Java, Python, and C++. The discussed feature is the physical units library.
