@@ -42,8 +42,8 @@ int main()
 
   std::cout << s1 << '\n';
   std::cout << s2 << '\n';
-  std::cout << quantity_cast<si::dim_speed::coherent_unit>(s1) << '\n';
-  std::cout << quantity_cast<si::metre_per_second>(s2) << '\n';
+  std::cout << quantity_cast<si::metre_per_second>(s1) << '\n';
+  std::cout << quantity_cast<si::dim_speed::coherent_unit>(s2) << '\n';
   std::cout << s3 << '\n';
   std::cout << s4 << '\n';
 }

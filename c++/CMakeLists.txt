@@ -32,7 +32,7 @@ function(units_executable target)
   target_link_libraries(${target} PRIVATE CONAN_PKG::mp-units)
 endfunction()
 
-units_executable(avg_speed)
+units_executable(functional)
 # units_executable(safety_1)
 # units_executable(safety_2)
 units_executable(sizeof)
