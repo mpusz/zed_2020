@@ -17,15 +17,14 @@ programming languages: Java, Python, and C++. The discussed feature is the physi
 1. Functional
     - implement `avg_speed` function that takes `length` and `time` arguments and returns `speed`
       in the unit derived from the units of function arguments
-    - calculate `avg_speed(220 km, 2 h)` and print the result in `km/h`
-    - calculate `avg_speed(140 mi, 2 h)` and print the result in `mi/h`
-    - calculate `avg_speed(220 km, 2 h)` and print the result in `m/s`
-    - calculate `avg_speed(140 mi, 2 h)` and print the result in `m/s`
+    - calculate `avg_speed(220 km, 2 h)` and print the result in `km/h` and `m/s`
+    - calculate `avg_speed(140 mi, 2 h)` and print the result in `mi/h` and `m/s`
 
 2. Safety
-    - ensure that `avg_speed(2 h, 220 km)` returns an error
-    - ensure that an error is reported when `avg_speed` will multiply the arguments instead of
-      dividing them (the result is not a quantity of speed)
+    - ensure that for reordered arguments `avg_speed(2 h, 220 km)` returns an error
+    - ensure that an error is reported when `avg_speed` returns the result of an invalid calculation
+        - function multiplies the arguments instead of dividing them
+        - the result is not a quantity of speed
 
 3. Performance
     - profile the time needed to create the quantity of `length` and `time` for `100` different

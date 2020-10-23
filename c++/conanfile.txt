@@ -1,0 +1,10 @@
+[requires]
+mp-units/0.7.0@mpusz/testing
+nanobench/4.3.0
+
+[generators]
+cmake
+
+[imports]
+bin, *.dll -> ./bin
+lib, *.dylib* -> ./bin
