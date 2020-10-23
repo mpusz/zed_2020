@@ -1,49 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>zed2020</groupId>
-  <artifactId>zed2020</artifactId>
-  <version>1.0-SNAPSHOT</version>
+    <groupId>zed2020</groupId>
+    <artifactId>zed2020</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-  <name>JSR 385 source code for EPAM's Zed 2020 conference</name>
- 
-  <properties>
-    <jdkVersion>14</jdkVersion>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-  </properties>
- 
-  <dependencies>
-    <dependency>
-      <groupId>tech.units</groupId>
-      <artifactId>indriya</artifactId>
-      <version>2.0.4</version>
-    </dependency>
-    <dependency>
-      <groupId>systems.uom</groupId>
-      <artifactId>systems-common</artifactId>
-      <version>2.0.2</version>
-    </dependency>
-  </dependencies>
+    <name>JSR 385 source code for EPAM's Zed 2020 conference</name>
 
-  <build>
-    <pluginManagement>
+    <properties>
+        <java.version>14</java.version>
+        <uberjar.name>benchmarks</uberjar.name>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>tech.units</groupId>
+            <artifactId>indriya</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>systems.uom</groupId>
+            <artifactId>systems-common</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>1.25.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>1.25.1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                  <excludes>
-                    <exclude>**/Safety_1.java</exclude>
-                  </excludes>
+                    <release>14</release>
+                    <excludes>
+                        <exclude>**/Safety_1.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${uberjar.name}</finalName>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>org.openjdk.jmh.Main</mainClass>
+                                </transformer>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-    </pluginManagement>
-  </build>
+    </build>
 </project>

@@ -29,7 +29,8 @@
 *.app
 
 # IDE-specific
-/.idea/
+*/.idea/
+*.iml
 /.vs/
 /.vscode/
 /CMakeSettings.json
@@ -42,3 +43,7 @@
 # Conan
 *.pyc
 /test_package/build/
+
+
+# Java-specific
+*/target
