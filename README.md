@@ -26,8 +26,10 @@ programming languages: Java, Python, and C++. The discussed feature is the physi
         - function multiplies the arguments instead of dividing them
         - the result is not a quantity of speed
 
-3. Performance
-    - profile the time needed to create the quantity of `length` and `time` for `100` different
-      values (obtained by incrementing the initial value) and to calculate `avg_speed` for each pair
-    - check how much more memory is needed for a quantity class compared to the basic fundamental
-      magnitude type
+3. Efficiency
+    - benchmark the following scenarios both for operations on fundamental/primitive types and on high-level
+      abstractions
+        - create the quantity of `length` and `time` and divide it to obtain `speed`
+        - create a quantity of `speed` and convert `km/h` to `m/s`
+    - check how much more memory is needed for a high-level abstraction (quantity class) compared to the
+      fundamental/primitive magnitude type
