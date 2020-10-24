@@ -22,22 +22,22 @@
 
 package zed2020;
 
-import javax.measure.Quantity;
-import javax.measure.quantity.Length;
-import javax.measure.quantity.Time;
-import javax.measure.quantity.Speed;
-
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
+
+import javax.measure.Quantity;
+import javax.measure.quantity.Length;
+import javax.measure.quantity.Speed;
+import javax.measure.quantity.Time;
 
 import static javax.measure.MetricPrefix.KILO;
 
 public class Safety_1 {
-  public static Quantity<Speed> avg_speed(Quantity<Length> length, Quantity<Time> time) {
-    return length.divide(time).asType(Speed.class);
-  }
+    public static Quantity<Speed> avg_speed(Quantity<Length> length, Quantity<Time> time) {
+        return length.divide(time).asType(Speed.class);
+    }
 
-  public static void main(String[] args) {
-    final Quantity<Speed> s = avg_speed(Quantities.getQuantity(2., Units.HOUR), Quantities.getQuantity(220., KILO(Units.METRE)));
-  }
+    public static void main(String[] args) {
+        final Quantity<Speed> s = avg_speed(Quantities.getQuantity(2., Units.HOUR), Quantities.getQuantity(220., KILO(Units.METRE)));
+    }
 }
