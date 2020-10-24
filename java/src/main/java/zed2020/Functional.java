@@ -34,7 +34,7 @@ import static javax.measure.MetricPrefix.KILO;
 import static systems.uom.common.USCustomary.MILE;
 
 public class Functional {
-    public static Quantity<Speed> avg_speed(Quantity<Length> length, Quantity<Time> time) {
+    public static Quantity<Speed> avg_speed(Quantity<Length> length, Quantity<Time> time) throws ClassCastException {
         return length.divide(time).asType(Speed.class);
     }
 

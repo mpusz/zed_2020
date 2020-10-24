@@ -23,20 +23,13 @@
 from pint import UnitRegistry
 import pyperf
 
-l = 60000.
-t = 3600.
+length = 220.
+time = 2.
+speed = 110.
 ureg = UnitRegistry()
 
-def avg_speed_fundamental(d, t):
-  speed = d / t
-
-def test_fundamental():
-  length = l
-  time = t
-  for _ in range(100):
-    speed = avg_speed_fundamental(length, time)
-    length = length + 1
-    time = time + 1
+def avg_speed_double(d, t):
+  return d / t
 
 @ureg.check('[length]', '[time]')
 def avg_speed_units(d, t):
@@ -45,14 +38,26 @@ def avg_speed_units(d, t):
     raise RuntimeError("Not a [speed] dimension")
   return speed
 
-def test_units():
-  length = l * ureg.metre
-  time = t * ureg.second
-  for _ in range(100):
-    speed = avg_speed_units(length, time)
-    length = length + 1 * ureg.metre
-    time = time + 1 * ureg.second
+def to_mps_double(s):
+  return s * (1000. / 3600.)
+
+def to_mps_units(s):
+  return s.to_base_units()
+
+def benchmark_avg_speed_double():
+  return avg_speed_double(length, time)
+
+def benchmark_avg_speed_units():
+  return avg_speed_units(length * ureg.kilometre, time * ureg.hour)
+
+def benchmark_to_mps_double():
+  return to_mps_double(speed)
+
+def benchmark_to_mps_units():
+  return to_mps_units(speed * ureg.kilometre / ureg.hour)
 
 runner = pyperf.Runner()
-runner.bench_func("avg_speed_fundamental", test_fundamental)
-runner.bench_func("avg_speed_units", test_units)
+runner.bench_func("avg_speed_fundamental", benchmark_avg_speed_double)
+runner.bench_func("avg_speed_units", benchmark_avg_speed_units)
+runner.bench_func("to_mps_fundamental", benchmark_to_mps_double)
+runner.bench_func("to_mps_units", benchmark_to_mps_units)
