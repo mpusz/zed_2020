@@ -31,31 +31,31 @@ namespace {
 using namespace units::physical;
 using namespace ankerl;
 
+void benchmark(const std::string& name, std::invocable auto func)
+{
+  auto fout = std::ofstream("pyperf_" + name + ".json");
+  nanobench::Bench()
+      .epochs(100)
+      .run(name, [&]{ nanobench::doNotOptimizeAway(func()); })
+      .render(nanobench::templates::pyperf(), fout);
+}
+
 constexpr double avg_speed(double d, double t) { return d / t; }
 constexpr Speed auto avg_speed(Length auto d, Time auto t) { return d / t; }
 
-void test(auto length, auto time)
-{
-  for (auto i = 0; i < 100; ++i) {
-    const auto speed = avg_speed(length++, time++);
-    nanobench::doNotOptimizeAway(speed);
-  }
-}
+constexpr double to_mps(double d) { return d * (1000. / 3600.); }
+constexpr si::speed<si::metre_per_second> to_mps(Speed auto s) { return units::quantity_cast<si::metre_per_second>(s); }
 
 }  // namespace
 
 int main()
 {
-  double length = 60'000;
-  double time = 3'600;
+  double length = 220;
+  double time = 2;
+  benchmark("avg_speed_double", [&]{ return avg_speed(length, time); });
+  benchmark("avg_speed_units", [&]{ return avg_speed(si::length<si::kilometre>(length), si::time<si::hour>(time)); });
 
-  auto fout = std::ofstream("pyperf_avg_speed_double.json");
-  nanobench::Bench()
-      .run("avg_speed_double", [=] { test(length, time); })
-      .render(nanobench::templates::pyperf(), fout);
-
-  fout = std::ofstream("pyperf_avg_speed_units.json");
-  nanobench::Bench()
-      .run("avg_speed_units", [=] { test(si::length<si::metre>(length), si::time<si::second>(time)); })
-      .render(nanobench::templates::pyperf(), fout);
+  double speed = 110;
+  benchmark("kmph_to_mps_double", [&]{ return to_mps(speed); });
+  benchmark("kmph_to_mps_units", [&]{ return to_mps(si::speed<si::kilometre_per_hour>(speed)); });
 }

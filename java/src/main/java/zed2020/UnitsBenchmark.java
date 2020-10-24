@@ -1,9 +1,6 @@
 package zed2020;
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -14,17 +11,54 @@ import tech.units.indriya.unit.Units;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static javax.measure.MetricPrefix.KILO;
-import static zed2020.Functional.avg_speed;
+import javax.measure.Quantity;
+import javax.measure.quantity.Speed;
 
+import static zed2020.Functional.avg_speed;
+import static javax.measure.MetricPrefix.KILO;
+
+@State(Scope.Thread)
+@BenchmarkMode(Mode.AverageTime)
+@Fork(value = 1)
+@Warmup(iterations = 3, time = 2, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 10, time = 2, timeUnit = TimeUnit.SECONDS)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class UnitsBenchmark {
 
-    @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public void benchmarkAvgSpeed() throws IOException {
-        avg_speed(Quantities.getQuantity(Math.random() * 1000, KILO(Units.METRE)), Quantities.getQuantity(Math.random() * 10, Units.HOUR));
+    double length = 220;
+    double time = 2;
+    double speed = 110;
 
+    public static double avg_speed_double(double l, double t) {
+        return l / t;
+    }
+   
+    public static double to_mps_double(double s) {
+        return s * (1000. / 3600.);
+    }
+   
+    public static Quantity<Speed> to_mps_units(Quantity<Speed> s) {
+        return s.to(Units.METRE_PER_SECOND);
+    }
+   
+    @Benchmark
+    public double benchmarkAvgSpeedDouble() throws IOException {
+        return avg_speed_double(length, time);
+    }
+
+    @Benchmark
+    public Quantity<Speed> benchmarkAvgSpeedUnits() throws IOException {
+        return avg_speed(Quantities.getQuantity(length, KILO(Units.METRE)), Quantities.getQuantity(time, Units.HOUR));
+    }
+
+    @Benchmark
+    public double benchmarkToMPSDouble() throws IOException {
+        return to_mps_double(speed);
+    }
+
+    @Benchmark
+    public Quantity<Speed> benchmarkToMPSUnits() throws IOException {
+        return to_mps_units(Quantities.getQuantity(speed, Units.KILOMETRE_PER_HOUR));
     }
 
     public static void main(String[] args) throws RunnerException {
