@@ -22,13 +22,13 @@
 
 package zed2020;
 
-import javax.measure.Quantity;
-import javax.measure.quantity.Length;
-import javax.measure.quantity.Time;
-import javax.measure.quantity.Speed;
-
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
+
+import javax.measure.Quantity;
+import javax.measure.quantity.Length;
+import javax.measure.quantity.Speed;
+import javax.measure.quantity.Time;
 
 import static javax.measure.MetricPrefix.KILO;
 
