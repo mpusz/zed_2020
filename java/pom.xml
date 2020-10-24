@@ -56,8 +56,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
                 <executions>
                     <execution>
+                        <id>jmh-test</id>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
@@ -71,6 +73,26 @@
                                 </transformer>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>object-size</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>size-estimation</finalName>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>zed2020.ObjectSizeEstimation</mainClass>
+                                    <manifestEntries>
+                                        <Main-Class>zed2020.ObjectSizeEstimation</Main-Class>
+                                        <Premain-class>zed2020.InstrumentationAgent</Premain-class>
+                                    </manifestEntries>
+                                </transformer>
                             </transformers>
                         </configuration>
                     </execution>
