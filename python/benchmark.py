@@ -44,20 +44,8 @@ def to_mps_double(s):
 def to_mps_units(s):
   return s.to_base_units()
 
-def benchmark_avg_speed_double():
-  return avg_speed_double(length, time)
-
-def benchmark_avg_speed_units():
-  return avg_speed_units(length * ureg.kilometre, time * ureg.hour)
-
-def benchmark_to_mps_double():
-  return to_mps_double(speed)
-
-def benchmark_to_mps_units():
-  return to_mps_units(speed * ureg.kilometre / ureg.hour)
-
 runner = pyperf.Runner()
-runner.bench_func("avg_speed_fundamental", benchmark_avg_speed_double)
-runner.bench_func("avg_speed_units", benchmark_avg_speed_units)
-runner.bench_func("to_mps_fundamental", benchmark_to_mps_double)
-runner.bench_func("to_mps_units", benchmark_to_mps_units)
+runner.bench_func("avg_speed_fundamental", lambda: avg_speed_double(length, time))
+runner.bench_func("avg_speed_units", lambda: avg_speed_units(length * ureg.kilometre, time * ureg.hour))
+runner.bench_func("to_mps_fundamental", lambda: to_mps_double(speed))
+runner.bench_func("to_mps_units", lambda: to_mps_units(speed * ureg.kilometre / ureg.hour))
