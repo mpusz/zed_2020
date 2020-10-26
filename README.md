@@ -29,7 +29,7 @@ programming languages: Java, Python, and C++. The discussed feature is the physi
 3. Efficiency
     - benchmark the following scenarios both for operations on fundamental/primitive types and on high-level
       abstractions
-        - create the quantity of `length` and `time` and divide it to obtain `speed`
-        - create a quantity of `speed` and convert `km/h` to `m/s`
+        - create the quantities of `length` and `time` and divide them to obtain `speed`
+        - create a quantity of `speed` and convert the unit from `km/h` to `m/s`
     - check how much more memory is needed for a high-level abstraction (quantity class) compared to the
       fundamental/primitive magnitude type
