@@ -24,11 +24,13 @@ from pint import UnitRegistry
 
 ureg = UnitRegistry()
 
-@ureg.check('[length]', '[time]')
-def avg_speed(d, t):
-  speed = d * t
-  if not speed.check('[speed]'):
-    raise RuntimeError("Not a [speed] dimension")
-  return speed
 
-s1 = avg_speed(220. * ureg.kilometer, 2. * ureg.hour)
+@ureg.check("[length]", "[time]")
+def avg_speed(d, t):
+    speed = d * t
+    if not speed.check("[speed]"):
+        raise RuntimeError("Not a [speed] dimension")
+    return speed
+
+
+s = avg_speed(220.0 * ureg.kilometer, 2.0 * ureg.hour)
