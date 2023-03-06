@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import math
 from pint import UnitRegistry
 
 ureg = UnitRegistry()
@@ -56,9 +57,9 @@ class StorageTank:
 
 
 class CylindricalStorageTank(StorageTank):
-    @ureg.check(None, "[area]", "[length]")
+    @ureg.check(None, "[length]", "[length]")
     def __init__(self, radius, height):
-        super().__init__(radius * radius, height)
+        super().__init__(math.pi * radius * radius, height)
 
 
 class RectangularStorageTank(StorageTank):
