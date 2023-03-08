@@ -39,19 +39,18 @@ import si.uom.NonSI;
 // import tech.uom.lib.common.function.QuantityFunctions;
 
 public class StorageTank {
-    private Quantity<Area> base;
-    private Quantity<Length> height;
-    private Quantity<Density> density;
-
     private static final Quantity<Density> airDensity = Quantities
             .getQuantity(1.225, Units.KILOGRAM.divide(Units.CUBIC_METRE))
             .asType(Density.class);
     private static final Quantity<Acceleration> g = Quantities.getQuantity(1, NonSI.STANDARD_GRAVITY);
 
+    private Quantity<Area> base;
+    private Quantity<Length> height;
+    private Quantity<Density> density = airDensity;
+
     public StorageTank(Quantity<Area> base, Quantity<Length> height) {
         this.base = base;
         this.height = height;
-        this.density = airDensity;
     }
 
     public void setContentsDensity(Quantity<Density> density) {

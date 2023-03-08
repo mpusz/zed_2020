@@ -26,7 +26,6 @@ import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
 import javax.measure.Quantity;
-import javax.measure.Unit;
 import javax.measure.quantity.Dimensionless;
 import javax.measure.quantity.Force;
 import javax.measure.quantity.Mass;
@@ -45,7 +44,8 @@ public class Main {
         StorageTank tank = new RectangularStorageTank(Quantities.getQuantity(1000, MILLI(Units.METRE)),
                 Quantities.getQuantity(500, MILLI(Units.METRE)), height);
         tank.setContentsDensity(
-                Quantities.getQuantity(1000, Units.KILOGRAM.divide(Units.CUBIC_METRE)).asType(Density.class));
+                Quantities.getQuantity(1000, Units.KILOGRAM.divide(Units.CUBIC_METRE))
+                        .asType(Density.class));
 
         final Quantity<Time> fillTime = Quantities.getQuantity(200, Units.SECOND);
         final Quantity<Mass> measuredMass = Quantities.getQuantity(20, Units.KILOGRAM);
@@ -54,7 +54,8 @@ public class Main {
         final Quantity<Volume> spareCapacity = tank.spareCapacity(measuredMass);
         final Quantity<Force> filledWeight = tank.filledWeight();
 
-        final Quantity<?> inputFlowRate = measuredMass.divide(fillTime); // TODO is there a mass change rate quantity?
+        final Quantity<?> inputFlowRate = measuredMass.divide(fillTime); // TODO is there a mass change rate
+                                                                         // quantity?
         final Quantity<Speed> floatRiseRate = fillLevel.divide(fillTime).asType(Speed.class);
         // final Quantity<Time> fillTimeLeft =
         // height.divide(fillLevel).subtract(Quantities.getQuantity(1,
@@ -63,7 +64,8 @@ public class Main {
 
         System.out.println("fill height at " + fillTime + " = " + fillLevel.to(Units.METRE) + " ("
                 + fillRatio.asType(Dimensionless.class).to(Units.PERCENT) + " full)");
-        System.out.println("fill weight at " + fillTime + " = " + filledWeight.to(Units.NEWTON));
+        System.out.println("fill weight at " + fillTime + " = " + filledWeight + "("
+                + filledWeight.to(Units.NEWTON) + ")");
         System.out.println("spare capacity at " + fillTime + " = " + spareCapacity.to(Units.CUBIC_METRE));
         System.out.println("input flow rate = " + inputFlowRate);
         // System.out.println("float rise rate = " +
