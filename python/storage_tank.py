@@ -33,27 +33,27 @@ g = ureg.standard_gravity
 class StorageTank:
     @ureg.check(None, "[area]", "[length]")
     def __init__(self, base, height):
-        self.base = base
-        self.height = height
-        self.density = air_density
+        self._base = base
+        self._height = height
+        self._density = air_density
 
     @ureg.check(None, "[density]")
     def set_contents_density(self, density):
         assert density > air_density
-        self.density = density
+        self._density = density
 
     def filled_weight(self):
-        volume = self.base * self.height
-        mass = self.density * volume
+        volume = self._base * self._height
+        mass = self._density * volume
         return mass * g
 
     @ureg.check(None, "[mass]")
     def fill_level(self, measured_mass):
-        return self.height * measured_mass * g / self.filled_weight()
+        return self._height * measured_mass * g / self.filled_weight()
 
     @ureg.check(None, "[mass]")
     def spare_capacity(self, measured_mass):
-        return (self.height - self.fill_level(measured_mass)) * self.base
+        return (self._height - self.fill_level(measured_mass)) * self._base
 
 
 class CylindricalStorageTank(StorageTank):
