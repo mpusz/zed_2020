@@ -37,7 +37,7 @@ def avg_speed(d, t):
 s1 = avg_speed(220 * ureg.kilometer, 2 * ureg.hour)
 s2 = avg_speed(140 * ureg.mile, 2 * ureg.hour)
 
-print("{}".format(s1))
-print("{}".format(s2))
-print("{}".format(s1.to("metre/second")))
-print("{}".format(s2.to_base_units()))
+print(s1)
+print(s2)
+print(s1.to("metre/second"))
+print(s2.to_base_units())
