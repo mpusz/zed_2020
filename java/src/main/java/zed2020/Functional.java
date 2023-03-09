@@ -34,14 +34,14 @@ import static javax.measure.MetricPrefix.KILO;
 import static systems.uom.common.USCustomary.MILE;
 
 public class Functional {
-    public static Quantity<Speed> avg_speed(Quantity<Length> length, Quantity<Time> time) throws ClassCastException {
-        return length.divide(time).asType(Speed.class);
+    public static Speed avg_speed(Length length, Time time) throws ClassCastException {
+        return (Speed) length.divide(time);
     }
 
     public static void main(String[] args) {
-        final Quantity<Speed> s1 = avg_speed(Quantities.getQuantity(220, KILO(Units.METRE)),
-                Quantities.getQuantity(2, Units.HOUR));
-        final Quantity<Speed> s2 = avg_speed(Quantities.getQuantity(140, MILE), Quantities.getQuantity(2, Units.HOUR));
+        final Speed s1 = avg_speed((Length) Quantities.getQuantity(220, KILO(Units.METRE)),
+                (Time) Quantities.getQuantity(2, Units.HOUR));
+        final Speed s2 = avg_speed((Length) Quantities.getQuantity(140, MILE), (Time) Quantities.getQuantity(2, Units.HOUR));
         System.out.println(s1);
         System.out.println(s2);
         System.out.println(s1.to(Units.METRE_PER_SECOND));

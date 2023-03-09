@@ -11,7 +11,7 @@
     <name>JSR 385 source code for EPAM's Zed 2020 conference</name>
 
     <properties>
-        <java.version>14</java.version>
+        <java.version>17</java.version>
         <uberjar.name>benchmarks</uberjar.name>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -20,12 +20,12 @@
         <dependency>
             <groupId>tech.units</groupId>
             <artifactId>indriya</artifactId>
-            <version>2.0.4</version>
+            <version>2.1.4</version>
         </dependency>
         <dependency>
             <groupId>systems.uom</groupId>
             <artifactId>systems-common</artifactId>
-            <version>2.0.2</version>
+            <version>2.1</version>
         </dependency>
         <dependency>
             <groupId>com.carrotsearch</groupId>
@@ -35,12 +35,12 @@
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
-            <version>1.25.1</version>
+            <version>1.36</version>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-generator-annprocess</artifactId>
-            <version>1.25.1</version>
+            <version>1.36</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -50,9 +50,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <release>14</release>
+                    <release>17</release>
                     <excludes>
                         <exclude>**/Safety_1.java</exclude>
                     </excludes>
@@ -61,7 +61,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.4.1</version>
                 <executions>
                     <execution>
                         <id>jmh-test</id>

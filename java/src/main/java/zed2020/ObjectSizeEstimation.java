@@ -5,6 +5,9 @@ import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
 import javax.measure.Quantity;
+import javax.measure.quantity.Length;
+import javax.measure.quantity.Speed;
+import javax.measure.quantity.Time;
 
 import static javax.measure.MetricPrefix.KILO;
 import static zed2020.Functional.avg_speed;
@@ -12,9 +15,9 @@ import static zed2020.Functional.avg_speed;
 public class ObjectSizeEstimation {
 
     public static void main(String[] args) {
-        Quantity[] quantities = new Quantity[10000];
+        Speed[] quantities = new Speed[10000];
         for (int i = 0; i < quantities.length; ++i) {
-            quantities[i] = avg_speed(Quantities.getQuantity(Math.random() * 1000, KILO(Units.METRE)), Quantities.getQuantity(Math.random() * 10, Units.HOUR));
+            quantities[i] = avg_speed((Length) Quantities.getQuantity(Math.random() * 1000, KILO(Units.METRE)), (Time) Quantities.getQuantity(Math.random() * 10, Units.HOUR));
         }
         System.out.println("Size of 10000 Quantity elements array: " + RamUsageEstimator.sizeOf(quantities) + " bytes");
         System.out.println("Scales are shared: " + (quantities[1].getScale() == quantities[0].getScale()));

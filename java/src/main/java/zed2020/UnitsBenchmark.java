@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.measure.Quantity;
+import javax.measure.quantity.Length;
 import javax.measure.quantity.Speed;
+import javax.measure.quantity.Time;
 
 import static zed2020.Functional.avg_speed;
 import static javax.measure.MetricPrefix.KILO;
@@ -20,8 +22,8 @@ import static javax.measure.MetricPrefix.KILO;
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @Fork(value = 1)
-@Warmup(iterations = 3, time = 2, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 10, time = 2, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 3, time = 2)
+@Measurement(iterations = 10, time = 2)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class UnitsBenchmark {
 
@@ -32,15 +34,15 @@ public class UnitsBenchmark {
     public static double avg_speed_double(double l, double t) {
         return l / t;
     }
-   
+
     public static double to_mps_double(double s) {
         return s * (1000. / 3600.);
     }
-   
+
     public static Quantity<Speed> to_mps_units(Quantity<Speed> s) {
         return s.to(Units.METRE_PER_SECOND);
     }
-   
+
     @Benchmark
     public double benchmarkAvgSpeedDouble() throws IOException {
         return avg_speed_double(length, time);
@@ -48,7 +50,7 @@ public class UnitsBenchmark {
 
     @Benchmark
     public Quantity<Speed> benchmarkAvgSpeedUnits() throws IOException {
-        return avg_speed(Quantities.getQuantity(length, KILO(Units.METRE)), Quantities.getQuantity(time, Units.HOUR));
+        return avg_speed((Length) Quantities.getQuantity(length, KILO(Units.METRE)), (Time) Quantities.getQuantity(time, Units.HOUR));
     }
 
     @Benchmark
