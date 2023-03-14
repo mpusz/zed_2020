@@ -22,6 +22,7 @@
 
 package zed2020.storage_tank;
 
+import tech.units.indriya.ComparableQuantity;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
@@ -44,8 +45,8 @@ public class StorageTank {
             .asType(Density.class);
     private static final Quantity<Acceleration> g = Quantities.getQuantity(1, NonSI.STANDARD_GRAVITY);
 
-    private Quantity<Area> base;
-    private Quantity<Length> height;
+    private final Quantity<Area> base;
+    private final Quantity<Length> height;
     private Quantity<Density> density = airDensity;
 
     public StorageTank(Quantity<Area> base, Quantity<Length> height) {
@@ -53,8 +54,8 @@ public class StorageTank {
         this.height = height;
     }
 
-    public void setContentsDensity(Quantity<Density> density) {
-        // assert density.isGreaterThan(airDensity); // TODO How to make it work?
+    public void setContentsDensity(ComparableQuantity<Density> density) {
+        assert density.isGreaterThan(airDensity);
         this.density = density;
     }
 

@@ -8,16 +8,12 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
-import java.io.IOException;
+import javax.measure.Quantity;
+import javax.measure.quantity.Speed;
 import java.util.concurrent.TimeUnit;
 
-import javax.measure.Quantity;
-import javax.measure.quantity.Length;
-import javax.measure.quantity.Speed;
-import javax.measure.quantity.Time;
-
-import static zed2020.Functional.avg_speed;
 import static javax.measure.MetricPrefix.KILO;
+import static zed2020.Functional.avg_speed;
 
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -27,9 +23,9 @@ import static javax.measure.MetricPrefix.KILO;
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class UnitsBenchmark {
 
-    double length = 220;
-    double time = 2;
-    double speed = 110;
+    final double length = 220;
+    final double time = 2;
+    final double speed = 110;
 
     public static double avg_speed_double(double l, double t) {
         return l / t;
@@ -44,22 +40,22 @@ public class UnitsBenchmark {
     }
 
     @Benchmark
-    public double benchmarkAvgSpeedDouble() throws IOException {
+    public double benchmarkAvgSpeedDouble() {
         return avg_speed_double(length, time);
     }
 
     @Benchmark
-    public Quantity<Speed> benchmarkAvgSpeedUnits() throws IOException {
-        return avg_speed((Length) Quantities.getQuantity(length, KILO(Units.METRE)), (Time) Quantities.getQuantity(time, Units.HOUR));
+    public Quantity<Speed> benchmarkAvgSpeedUnits() {
+        return avg_speed(Quantities.getQuantity(length, KILO(Units.METRE)), Quantities.getQuantity(time, Units.HOUR));
     }
 
     @Benchmark
-    public double benchmarkToMPSDouble() throws IOException {
+    public double benchmarkToMPSDouble() {
         return to_mps_double(speed);
     }
 
     @Benchmark
-    public Quantity<Speed> benchmarkToMPSUnits() throws IOException {
+    public Quantity<Speed> benchmarkToMPSUnits() {
         return to_mps_units(Quantities.getQuantity(speed, Units.KILOMETRE_PER_HOUR));
     }
 
