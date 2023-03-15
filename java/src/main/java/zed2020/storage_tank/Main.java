@@ -37,15 +37,10 @@ import javax.measure.quantity.Time;
 import javax.measure.quantity.Volume;
 
 import si.uom.quantity.Density;
-import zed2020.Functional;
-
-import java.util.logging.Logger;
 
 import static javax.measure.MetricPrefix.MILLI;
 
 public class Main {
-
-    private static final Logger LOGGER = Logger.getLogger(Functional.class.getName());
 
     public static void main(String[] args) {
         final Quantity<Length> height = Quantities.getQuantity(200, MILLI(Units.METRE));
@@ -65,17 +60,19 @@ public class Main {
         final Quantity<MassFlowRate> inputFlowRate = measuredMass.divide(fillTime).asType(MassFlowRate.class);
         final Quantity<Speed> floatRiseRate = fillLevel.divide(fillTime).asType(Speed.class);
         Quantity<Dimensionless> one = Quantities.getQuantity(1, AbstractUnit.ONE);
-        Quantity<Dimensionless> scalar = height.divide(fillLevel).asType(Dimensionless.class);
+        Quantity<Dimensionless> scalar = height.divide(fillLevel).asType(Dimensionless.class)
+                .to(AbstractUnit.ONE);
         final Quantity<Time> fillTimeLeft = fillTime.multiply(scalar.subtract(one).getValue());
         final Quantity<?> fillRatio = fillLevel.divide(height);
 
-        LOGGER.info(String.format("fill height at %s = %s (%s full)", fillTime, fillLevel.to(Units.METRE), fillRatio.asType(Dimensionless.class).to(Units.PERCENT)));
-        LOGGER.info(String.format("fill weight at %s = %s (%s)", fillTime, filledWeight, filledWeight.to(Units.NEWTON)));
-        LOGGER.info(String.format("spare capacity at %s = %s", fillTime, spareCapacity.to(Units.CUBIC_METRE)));
-        LOGGER.info(String.format("input flow rate = %s", inputFlowRate));
-        LOGGER.info(String.format("float rise rate = %s",  floatRiseRate.to(Units.METRE_PER_SECOND)));
-        LOGGER.info(String.format("float rise rate = %s",  floatRiseRate.to(Units.METRE.divide(Units.SECOND).asType(Speed.class))));
-        LOGGER.info(String.format("tank full E.T.A. at current flow rate = %s", fillTimeLeft));
-
+        System.out.println("fill height at " + fillTime + " = " + fillLevel.to(Units.METRE) + " ("
+                + fillRatio.asType(Dimensionless.class).to(Units.PERCENT) + " full)");
+        System.out.println("fill weight at " + fillTime + " = " + filledWeight + "("
+                + filledWeight.to(Units.NEWTON) + ")");
+        System.out.println("spare capacity at " + fillTime + " = " + spareCapacity.to(Units.CUBIC_METRE));
+        System.out.println("input flow rate = " + inputFlowRate);
+        System.out.println("float rise rate = " + floatRiseRate.to(Units.METRE_PER_SECOND));
+        System.out.println("tank full E.T.A. at current flow rate = " + fillTimeLeft);
+        System.out.println("scalar = " + scalar.to(AbstractUnit.ONE));
     }
 }

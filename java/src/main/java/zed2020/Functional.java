@@ -47,9 +47,9 @@ public class Functional {
         final Quantity<Speed> s1 = avg_speed(Quantities.getQuantity(220, KILO(Units.METRE)),
                 Quantities.getQuantity(2, Units.HOUR));
         final Quantity<Speed> s2 = avg_speed(Quantities.getQuantity(140, MILE), Quantities.getQuantity(2, Units.HOUR));
-        LOGGER.info(String.format("s1 = %s", s1));
-        LOGGER.info(String.format("s2 = %s", s2));
-        LOGGER.info(String.format("s1 in m/s = %s", s1.to(Units.METRE_PER_SECOND)));
-        LOGGER.info(String.format("s2 in system unit = %s", s2.toSystemUnit()));
+        System.out.println(s1);
+        System.out.println(s2);
+        System.out.println(s1.to(Units.METRE_PER_SECOND));
+        System.out.println(s2.toSystemUnit());
     }
 }
